@@ -34,7 +34,6 @@ let BlogPost = post =>
         h('hr', {}, null)
 ]);
 
-
 // react create element'ing the BlogPost function, with the 'post' data.
 // pay attention to the .map because we have a function, with a function in it.
 let PostList = (props) => {
@@ -48,10 +47,12 @@ let PostList = (props) => {
 // now we are rendering a function named PostList, with the BlogEntries
 // since the object BlogEntries is an array, we'll wrap it in  {} and
 //  use .map in the PostList function
-let myVDOM = h('div', {className: "postlist"}, [
-            h('h1',{}, 'Sic gorgiamus allos subjectatos nunc!'),
-            h(PostList, { blogEntries: posts })
-            ]);
+let myVDOM = () =>
+    h('div', {className: "postlist"}, [
+        h('h1',{}, 'Sic gorgiamus allos subjectatos nunc!'),
+        h(PostList, { blogEntries: posts })
+    ]);
 
-// jam it on the page
-ReactDOM.render(myVDOM, document.getElementById('react-main'));
+// added some spaces to show more clearly that I am
+// invoking the component myVDOM
+ReactDOM.render( h(myVDOM), document.getElementById('react-main') );
