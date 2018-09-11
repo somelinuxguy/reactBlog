@@ -1,5 +1,5 @@
 // pretend I got these from a wordpress API
-const posts = [{
+let posts = [{
     "userId": 1,
     "id": 1,
     "title": "sunt aut facere repellat provident occaecati",
@@ -21,16 +21,24 @@ const posts = [{
     "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
   }];
 
-let h = React.createElement;
+const h = React.createElement;
 
 // This is a COMPONENT
 // It takes ONE thing and returns ONE thing
-// It is being called by the component PostList
+// It is being called by the component PostList.
+// let's add a button, and make it delete posts then redraw the page
 let BlogPost = post =>
     h('li',{className: "blogitem"}, [
         h('p',{},`Title: ${post.title}`),
         h('p',{},`User: ${post.userId}`),
         h('p',{},`Body: ${post.body}`),
+        h('button',{
+            onClick: () => {
+                console.log(`Deleting post: ${post.id}`);
+                posts = posts.filter(myPost => myPost.id !== post.id);
+                rerender();
+            }
+        },'delete'),
         h('hr', {}, null)
 ]);
 
@@ -55,4 +63,10 @@ let myVDOM = () =>
 
 // added some spaces to show more clearly that I am
 // invoking the component myVDOM
-ReactDOM.render( h(myVDOM), document.getElementById('react-main') );
+let rerender = () => {
+    ReactDOM.render( h(myVDOM), document.getElementById('react-main') );
+}
+
+// --- MAIN ---
+// Render the page for the first time.
+rerender();
