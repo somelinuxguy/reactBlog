@@ -24,7 +24,8 @@ const posts = [{
 let h = React.createElement;
 
 // This is a COMPONENT
-// it takes ONE thing and returns ONE thing
+// It takes ONE thing and returns ONE thing
+// It is being called by the component PostList
 let BlogPost = post =>
     h('li',{className: "blogitem"}, [
         h('p',{},`Title: ${post.title}`),
@@ -34,8 +35,8 @@ let BlogPost = post =>
 ]);
 
 
-// the old 'fat arrow without braces is a RETURN' design pattern.
 // react create element'ing the BlogPost function, with the 'post' data.
+// pay attention to the .map because we have a function, with a function in it.
 let PostList = (props) => {
     return h('ul', {}, 
         props.blogEntries.map(post => 
@@ -44,7 +45,9 @@ let PostList = (props) => {
     )
 }
 
-// note the children of ul is a function
+// now we are rendering a function named PostList, with the BlogEntries
+// since the object BlogEntries is an array, we'll wrap it in  {} and
+//  use .map in the PostList function
 let myVDOM = h('div', {className: "postlist"}, [
             h('h1',{}, 'Sic gorgiamus allos subjectatos nunc!'),
             h(PostList, { blogEntries: posts })
