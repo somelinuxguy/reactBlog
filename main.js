@@ -23,20 +23,31 @@ const posts = [{
 
 let h = React.createElement;
 
-// the old 'fat arrow without braces is a RETURN' design pattern.
-let postList = posts.map(post => 
+// This is a COMPONENT
+// it takes ONE thing and returns ONE thing
+let BlogPost = post =>
     h('li',{className: "blogitem"}, [
         h('p',{},`Title: ${post.title}`),
         h('p',{},`User: ${post.userId}`),
         h('p',{},`Body: ${post.body}`),
         h('hr', {}, null)
-    ])
-)
+]);
+
+
+// the old 'fat arrow without braces is a RETURN' design pattern.
+// react create element'ing the BlogPost function, with the 'post' data.
+let PostList = (props) => {
+    return h('ul', {}, 
+        props.blogEntries.map(post => 
+            h(BlogPost,post)
+        )
+    )
+}
 
 // note the children of ul is a function
 let myVDOM = h('div', {className: "postlist"}, [
             h('h1',{}, 'Sic gorgiamus allos subjectatos nunc!'),
-            h('ul',{}, postList)
+            h(PostList, { blogEntries: posts })
             ]);
 
 // jam it on the page
