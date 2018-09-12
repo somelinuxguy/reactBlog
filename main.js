@@ -34,12 +34,12 @@ let BlogPost = props =>
         h('p',{},`Body: ${props.post.body}`),
         h('button',{
             onClick: () => {
-                props.deletepost(props.post.id);
+                props.deletePost(props.post.id);
             }
         },'delete'),
         h('button',{
             onClick: () => {
-                props.snakepost(props.post);
+                props.snakePost(props.post.id);
             }
         },'snake me'),
         h('hr', {}, null)
@@ -50,7 +50,8 @@ let BlogPost = props =>
 let PostList = (props) => {
     return h('ul', {}, 
         props.posts.map(post => 
-            h(BlogPost,{ snakepost: props.snakepost, deletepost: props.deletepost, post: post})
+            h(BlogPost,{ snakePost: props.snakePost, deletePost: props.deletePost, post: post})
+            //                                      if key and value are the same, I could just use post
         )
     )
 }
@@ -72,9 +73,9 @@ class Homepage extends React.Component {
                 {posts : this.state.posts.filter(myPost => myPost.id !== id)}
             );
         }
-        let snakePost = (post) => {
+        let snakePost = (id) => {
             let newPosts = this.state.posts.map(currentPost =>
-                (currentPost.id === post.id) ? 
+                (currentPost.id === id) ? 
                     Object.assign({}, currentPost, {title : currentPost.title + 's'})
                 : currentPost
             );
@@ -84,7 +85,7 @@ class Homepage extends React.Component {
         }
         return h('div', {className: "postlist"}, [
                 h('h1',{}, 'Sic gorgiamus allos subjectatos nunc!'),
-                h(PostList, {snakepost: snakePost, deletepost: deletePost, posts: this.state.posts} )
+                h(PostList, {snakePost, deletePost, posts: this.state.posts} )
         ]);
     }
 }
